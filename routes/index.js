@@ -9,6 +9,7 @@ const indiceDatasRoutes = require('./ro_indiceData')
 const agendaTelefonicaRoutes = require('./ro_agendaTelefonica')
 const assisTecSolicitacaoRoutes = require('./ro_assistecsolicitacao')
 const portalRoutes = require('./ro_portal')
+const propostaRoutes = require('./ro_proposta')
 
 module.exports = [
     usuarioRoutes,
@@ -21,5 +22,6 @@ module.exports = [
     indiceDatasRoutes,
     agendaTelefonicaRoutes,
     assisTecSolicitacaoRoutes,
-    portalRoutes
+    portalRoutes,
+    propostaRoutes
 ]
