@@ -36,6 +36,9 @@ const Pessoa = sequelize.define('pessoas', {
   num_creci: Sequelize.STRING(20),
   adm: Sequelize.BOOLEAN,
   admin: Sequelize.INTEGER,
+  banco: Sequelize.STRING(5),
+  agencia: Sequelize.STRING(10),
+  conta_corrente: Sequelize.STRING(20),
 }, {
   timestamp: false,
   createdAt: false,

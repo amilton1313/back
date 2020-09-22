@@ -137,7 +137,6 @@ exports.getIndicesIntranetPeriodo = (req, res, next) => {
   const body = req.body
 
   const {dataOne, dataTwo} = req.body
-  console.log('req ',req.body)
 
   // const hoje = new Date()
   // const dataAtual = hoje.getFullYear() + '-' + (hoje.getMonth() + 1) + '-01'
@@ -162,6 +161,7 @@ exports.getIndicesIntranetPeriodo = (req, res, next) => {
 
     where id1.indice_data between :dataOne and :dataTwo
     and id1.id_indice = 60
+    order by indice_data desc
   `,
   { replacements: { dataOne, dataTwo } })
     .then(indiceDatas => {

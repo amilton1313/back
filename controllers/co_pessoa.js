@@ -66,7 +66,7 @@ exports.getPessoaByNome = (req, res, next) => {
   Pessoa.sequelize.query(`select id_pessoa, nome
   from pessoas
   where lower(nome) like :busca`,
-  { replacements: { busca } })
+    { replacements: { busca } })
     .then(pessoa => {
       res.status(200).json(pessoa[0])
     })
@@ -96,7 +96,7 @@ exports.getPessoaByCnpj = (req, res, next) => {
   Pessoa.sequelize.query(`select *
   from pessoas
   where cpf_cnpj = :cnpj`,
-  { replacements: { cnpj } })
+    { replacements: { cnpj } })
     .then(pessoa => {
       res.status(200).json(pessoa[0])
     })
@@ -210,7 +210,7 @@ exports.getPessoaByCpf = (req, res, next) => {
 from pessoas pes 
 where pes.cpf_cnpj = :cpf) as p
   `,
-  { replacements: { cpf } })
+    { replacements: { cpf } })
     .then(pessoas => {
       const pes = pessoas[0]
       res.status(200).json(pes[0])
@@ -241,6 +241,55 @@ exports.getGrupoPessoas = (req, res, next) => {
         
         where contr.id_empreendimento = 42
   `)
+    .then(pessoas => {
+      res.status(200).json(pessoas[0])
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json('Usuário não encontrado.')
+    })
+}
+
+exports.getPessoaCompletaById = (req, res, next) => {
+
+  const { id } = req.params
+
+  Pessoa.sequelize.query(`
+  select row_to_json(t) pessoa
+    from (
+      select pes.id_pessoa, pes.tipo_pessoa,
+      pes.nome, pes.endereco, pes.complemento, pes.bairro, pes.municipio, pes.uf, pes.cep, pes.cpf_cnpj, pes.num_creci, compl.data_nascimento,
+      compl.nacionalidade, compl.sexo, compl.data_casamento, compl.profissao, compl.numero_dependentes, compl.rg, compl.data_expedicao, compl.orgao_emissor_uf,
+      compl.tempo_empresa, compl.cargo, compl.remuneracao, compl.outras_rendas_origem, compl.outras_rendas_valor, compl.estado_civil, compl.regime_casamento,
+      compl.pacto_nupcial, compl.conjuge_nome, compl.empresa_nome, compl.financ_descricao, compl.financ_valor, compl.financ_prazo, compl.companheiro_nome,
+      compl.conjuge_cpf, compl.uniao_estavel,
+        (
+          select array_to_json(array_agg(row_to_json(d)))
+          from (
+            select fone.contato
+            from pessoas_contatos fone
+            where pes.id_pessoa=fone.id_pessoa
+          and fone.id_tipo = 1
+            
+          ) d
+        ) as telefones,
+      (
+          select array_to_json(array_agg(row_to_json(d)))
+          from (
+            select email.contato
+            from pessoas_contatos email
+            where pes.id_pessoa=email.id_pessoa
+          and email.id_tipo = 2
+            
+          ) d
+        ) as emails
+      from pessoas pes
+      left join pessoas_complemento compl
+      on pes.id_pessoa = compl.id_pessoa
+      where pes.id_pessoa = :id
+    ) t
+  `,
+    { replacements: { id } })
     .then(pessoas => {
       res.status(200).json(pessoas[0])
     })
