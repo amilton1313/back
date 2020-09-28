@@ -8,6 +8,7 @@ const router = express.Router()
 
 // router.get('/propostas', propostaController.getpropostas)
 router.get('/proposta/:id', propostaController.getPropostaById)
+router.put('/proposta/:id', propostaController.updProposta)
 // router.get('/proposta/nome/:nome', propostaController.getpropostaByNome)
 // router.post('/proposta', md_auth.auth, propostaController.addproposta)
 // router.put('/proposta/:id', md_auth.auth, propostaController.updproposta)

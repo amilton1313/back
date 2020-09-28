@@ -80,7 +80,32 @@ exports.getPessoas = (req, res, next) => {
   Pessoa.sequelize.query(`
   select id_pessoa, nome
   from pessoas
-  order by nome`)
+  order by nome limit 100`)
+    .then(pessoas => {
+      res.status(200).json(pessoas[0])
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json('Usuário não encontrado.')
+    })
+}
+
+exports.getImobiliarias = (req, res, next) => {
+  Pessoa.sequelize.query(`
+  select pes.id_pessoa, pes.nome
+  from pessoas pes
+  
+  left join pessoas_classes cla
+  on pes.id_pessoa = cla.id_pessoa
+  
+  where cla.id_classe = 10 or
+  cla.id_classe = 20 or
+  cla.id_classe = 21
+
+  group by pes.id_pessoa, pes.nome
+  
+  order by pes.nome
+  `)
     .then(pessoas => {
       res.status(200).json(pessoas[0])
     })
