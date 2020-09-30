@@ -80,7 +80,7 @@ exports.getPessoas = (req, res, next) => {
   Pessoa.sequelize.query(`
   select id_pessoa, nome
   from pessoas
-  order by nome limit 100`)
+  order by nome`)
     .then(pessoas => {
       res.status(200).json(pessoas[0])
     })

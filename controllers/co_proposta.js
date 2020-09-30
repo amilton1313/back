@@ -35,9 +35,39 @@ exports.updProposta = (req, res, next) => {
 
 exports.getPropostaById = (req, res, next) => {
   const id = req.params.id
-  Proposta.findByPk(id)
+  Proposta.sequelize.query(`
+      select main.id_proposta, main.data,
+      main.id_imobiliaria, imob.nome as nomeimobiliaria,
+      main.id_corretor, cor.nome as nomecorretor,
+      main.id_proponente, prop.nome as nomeproponente,
+      main.id_interveniente, inter.nome as nomeinterveniente,
+      main.id_empreendimento, empreend.nome as nomeempreendimento,
+      main.id_tabela_vendas,
+      main.observacoes
+        
+      
+      from propostas main
+          
+      left join pessoas imob
+      on imob.id_pessoa = main.id_imobiliaria
+          
+      left join pessoas cor
+      on cor.id_pessoa = main.id_corretor
+          
+      left join pessoas prop
+      on prop.id_pessoa = main.id_proponente
+        
+      left join pessoas inter
+      on inter.id_pessoa = main.id_interveniente
+      
+      left join empreendimentos empreend
+      on empreend.id_empreendimento = main.id_empreendimento
+          
+      where id_proposta = :id
+    `,
+    { replacements: { id } })
     .then(proposta => {
-      res.status(200).json(proposta)
+      res.status(200).json(proposta[0])
     })
     .catch(err => {
       console.log(err)
