@@ -113,3 +113,88 @@ exports.getUndsProposta = (req, res, next) => {
       res.status(500).json('Proposta não encontrada.')
     })
 }
+
+
+
+// ******************************************
+
+
+
+
+exports.firstIndice = (req, res, next) => {
+  const {tabela, field} = req.params
+  console.log(req.params)
+
+  PropostaUnidade.sequelize.query(`
+      select min(${field})
+      from ${tabela}
+    `,
+    { replacements: { tabela, field } })
+    .then(id => {
+      res.status(200).json(id[0])
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json('Id não encontrado.')
+    })
+}
+
+exports.prevIndice = (req, res, next) => {
+  const {tabela, field, atual} = req.params
+  console.log(req.params)
+
+  PropostaUnidade.sequelize.query(`
+      select ${field}
+      from ${tabela} 
+      where ${field} < :atual
+      order by ${field} desc limit 1
+    `,
+    { replacements: { tabela, field, atual } })
+    .then(id => {
+      res.status(200).json(id[0])
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json('Id não encontrado.')
+    })
+}
+
+exports.nextIndice = (req, res, next) => {
+  const {tabela, field, atual} = req.params
+  console.log(req.params)
+
+
+  PropostaUnidade.sequelize.query(`
+      select ${field}
+      from ${tabela} 
+      where ${field} > :atual
+      order by ${field} asc limit 1
+    `,
+    { replacements: { tabela, field, atual } })
+    .then(id => {
+      res.status(200).json(id[0])
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json('Id não encontrado.')
+    })
+}
+
+exports.lastIndice = (req, res, next) => {
+  const {tabela, field} = req.params
+  console.log(req.params)
+
+  PropostaUnidade.sequelize.query(`
+      select max(${field})
+      from ${tabela}
+    `,
+    { replacements: { tabela, field } })
+    .then(id => {
+      res.status(200).json(id[0])
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json('Id não encontrado.')
+    })
+}
+

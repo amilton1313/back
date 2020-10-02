@@ -15,7 +15,10 @@ router.delete('/propostaunidade/:id_proposta/:id_unidade', propostaController.de
 // router.get('/proposta/nome/:nome', propostaController.getpropostaByNome)
 // router.post('/proposta', md_auth.auth, propostaController.addproposta)
 // router.put('/proposta/:id', md_auth.auth, propostaController.updproposta)
-// router.delete('/proposta/:id', md_auth.auth, propostaController.delproposta)
+router.get('/firstindice/:tabela/:field', propostaController.firstIndice)
+router.get('/previndice/:tabela/:field/:atual', propostaController.prevIndice)
+router.get('/nextindice/:tabela/:field/:atual', propostaController.nextIndice)
+router.get('/lastindice/:tabela/:field', propostaController.lastIndice)
 
 
 module.exports = router
