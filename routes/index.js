@@ -10,6 +10,7 @@ const agendaTelefonicaRoutes = require('./ro_agendaTelefonica')
 const assisTecSolicitacaoRoutes = require('./ro_assistecsolicitacao')
 const portalRoutes = require('./ro_portal')
 const propostaRoutes = require('./ro_proposta')
+const propostaPropostoRoutes = require('./ro_propostaProposto')
 const tabelasVendasRoutes = require('./ro_tabela_vendas')
 
 module.exports = [
@@ -25,5 +26,6 @@ module.exports = [
     assisTecSolicitacaoRoutes,
     portalRoutes,
     propostaRoutes,
+    propostaPropostoRoutes,
     tabelasVendasRoutes
 ]
