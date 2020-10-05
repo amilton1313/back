@@ -16,7 +16,7 @@ const PropostaProposto = sequelize.define('propostas_proposto', {
   id_tipo: Sequelize.INTEGER,
   valorsem: Sequelize.NUMERIC(10,2),
   vcto_primeira: Sequelize.DATEONLY,
-  reforco_tipo: Sequelize.NUMERIC(10,2)
+  reforco_tipo: Sequelize.INTEGER,
 }, {
   tableName: 'propostas_proposto',
   timestamp: false,
