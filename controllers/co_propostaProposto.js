@@ -66,6 +66,7 @@ exports.getPropostaParcelasById = (req, res, next) => {
       on ptr.id_tiporef = pp.reforco_tipo
       
       where pp.id_proposta = :id
+      order by id_tipo
     `,
     { replacements: { id } })
     .then(proposta => {
