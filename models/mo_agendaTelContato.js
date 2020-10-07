@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 
 const sequelize = require('../util/DBconnection')
 
-const AgendaTelefonicaContato = sequelize.define('agenda_telefonica_contato', {
+const mo_agendaTelContato = sequelize.define('agenda_telefonica_contato', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -20,4 +20,4 @@ const AgendaTelefonicaContato = sequelize.define('agenda_telefonica_contato', {
   updatedAt: false
 });
 
-module.exports = AgendaTelefonicaContato
+module.exports = mo_agendaTelContato
